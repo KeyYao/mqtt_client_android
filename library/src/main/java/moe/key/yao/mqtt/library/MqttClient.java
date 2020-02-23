@@ -74,13 +74,13 @@ public class MqttClient {
         startInternal(host, port, uuid, clearSession, true, caFilePath, username, password);
     }
 
-    private void startInternal(@NonNull String host, int port, @NonNull String uuid, boolean clearSession, boolean isTSL, @Nullable String caFilePath, @Nullable String username, @Nullable String password) {
+    private void startInternal(@NonNull String host, int port, @NonNull String uuid, boolean clearSession, boolean isTLS, @Nullable String caFilePath, @Nullable String username, @Nullable String password) {
         if (mPtr == 0) {
             mPtr = _init(host,
                     port,
                     uuid,
                     clearSession,
-                    isTSL,
+                    isTLS,
                     caFilePath == null ? "" : caFilePath,
                     username == null ? "" : username,
                     password == null ? "" : password);
@@ -272,7 +272,7 @@ public class MqttClient {
     }
 
     // ==== native
-    private native long _init(String host, int port, String uuid, boolean clearSession, boolean isTSL, String caFilePath, String userName, String password);
+    private native long _init(String host, int port, String uuid, boolean clearSession, boolean isTLS, String caFilePath, String userName, String password);
 
     private native void _start(long ptr);
 

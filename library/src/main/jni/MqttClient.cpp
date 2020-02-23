@@ -58,7 +58,7 @@ void mqtt_on_log(void *instance, int level, const char *str);
 void callback2Java(int what, void* obj, JNIEnv *env, jobject instance);
 
 // jni method define
-jlong MQTTCLIENT_JNICALL mqtt_native_init(JNIEnv *env, jobject instance, jstring hostString, jint portInt, jstring uuidString, jboolean clearSession, jboolean isTSL, jstring caFilePathString, jstring usernameString, jstring passwordString);
+jlong MQTTCLIENT_JNICALL mqtt_native_init(JNIEnv *env, jobject instance, jstring hostString, jint portInt, jstring uuidString, jboolean clearSession, jboolean isTLS, jstring caFilePathString, jstring usernameString, jstring passwordString);
 void MQTTCLIENT_JNICALL mqtt_native_start(JNIEnv *env, jobject instance, jlong ptr);
 void MQTTCLIENT_JNICALL mqtt_native_reconnect(JNIEnv *env, jobject instance, jlong ptr);
 void MQTTCLIENT_JNICALL mqtt_native_subscribe(JNIEnv *env, jobject instance, jlong ptr, jobjectArray topicJArray, jintArray qosJArray);
@@ -170,7 +170,7 @@ JNIEXPORT void JNICALL JNI_OnUnload(JavaVM *vm, void *reserved) {
 
 
 // jni method
-jlong MQTTCLIENT_JNICALL mqtt_native_init(JNIEnv *env, jobject instance, jstring hostString, jint portInt, jstring uuidString, jboolean clearSession, jboolean isTSL, jstring caFilePathString, jstring usernameString, jstring passwordString) {
+jlong MQTTCLIENT_JNICALL mqtt_native_init(JNIEnv *env, jobject instance, jstring hostString, jint portInt, jstring uuidString, jboolean clearSession, jboolean isTLS, jstring caFilePathString, jstring usernameString, jstring passwordString) {
     const char *host = env->GetStringUTFChars(hostString, nullptr);
     const char *uuid = env->GetStringUTFChars(uuidString, nullptr);
     const char *caFilePath = env->GetStringUTFChars(caFilePathString, nullptr);
@@ -190,7 +190,7 @@ jlong MQTTCLIENT_JNICALL mqtt_native_init(JNIEnv *env, jobject instance, jstring
     mosq->on_log_callback = mqtt_on_log;
 
 
-    if (isTSL) {
+    if (isTLS) {
         mosq->tls_insecure_set(true);
         mosq->tls_opts_set(1, "tlsv1", nullptr);
         if (strlen(caFilePath) != 0) {
