@@ -7,6 +7,12 @@
 
 ## 接口
 MqttClient.java
+```java
+/**
+ * 获取单例
+ */
+public static MqttClient getInstance()
+```
 ```java 
 /**
  * 启动mqtt服务
